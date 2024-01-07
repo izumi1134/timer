@@ -2,8 +2,6 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 
-import 'next_page.dart';
-
 void main() {
   runApp(const MyApp());
 }
@@ -54,9 +52,29 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
-              '$_second',
-              style: TextStyle(fontSize: 100),
+            Row(
+              children: [
+                Text(
+                  '${_second ~/ 60000}',
+                  style: TextStyle(fontSize: 100),
+                ),
+                Text(
+                  '.',
+                  style: TextStyle(fontSize: 100),
+                ),
+                Text(
+                  '${_second % 60000 ~/ 1000}',
+                  style: TextStyle(fontSize: 100),
+                ),
+                Text(
+                  '.',
+                  style: TextStyle(fontSize: 100),
+                ),
+                Text(
+                  '${_second % 1000 ~/ 10}',
+                  style: TextStyle(fontSize: 100),
+                ),
+              ],
             ),
             ElevatedButton(
               onPressed: () {
@@ -93,20 +111,11 @@ class _MyHomePageState extends State<MyHomePage> {
       _timer?.cancel();
     } else {
       _timer = Timer.periodic(
-        const Duration(seconds: 1),
+        const Duration(milliseconds: 1),
         (timer) {
           setState(() {
             _second++;
           });
-
-          if (_second == 10) {
-            resetTimer();
-
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => NextPage()),
-            );
-          }
         },
       );
     }
